@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -48,28 +48,56 @@ namespace Alphabetizer
 
         private static void AlphabetizeNewlineList(string filePath, Op operation)
         {
-            List<string> lines = null;
+            List<string> preLines = new List<string>();
+            List<string> postLines = new List<string>();
+            List<string> alphaLines = null;
             using (StreamReader reader = new StreamReader(filePath))
             {
+                bool preAlpha = true;
                 // get each line until end of file
                 while (reader.Peek() >= 0)
                 {
                     string line = reader.ReadLine();
                     if (line.Equals(ALPHA_START))
                     {
-                        lines = InAlphaNewlineLines(reader);
-                        break;
+                        alphaLines = InAlphaNewlineLines(reader);
+                        preAlpha = false;
+                    }
+                    else if (preAlpha)
+                    {
+                        preLines.Add(line);
+                    }
+                    else
+                    {
+                        postLines.Add(line);
                     }
                 }
             }
 
-            lines?.Sort();
-            ReplaceAlphaNewlineLines(filePath, lines);
+            alphaLines?.Sort();
+            ReplaceAlphaNewlineLines(filePath, preLines, alphaLines, postLines);
         }
 
-        private static void ReplaceAlphaNewlineLines(string filePath, List<string> lines)
+        // TODO: make sure you can handle empty strings
+        private static void ReplaceAlphaNewlineLines(string filePath, List<string> preLines, List<string> alphaLines, List<string> postLines)
         {
-            throw new NotImplementedException();
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                foreach (string preLine in preLines)
+                {
+                    writer.Write(preLine);
+                }
+
+                foreach (string alphaLine in alphaLines)
+                {
+                    writer.Write(alphaLine);
+                }
+
+                foreach (string postLine in postLines)
+                {
+                    writer.Write(postLine);
+                }
+            }
         }
 
         private static List<string> InAlphaNewlineLines(StreamReader reader)

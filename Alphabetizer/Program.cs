@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Alphabetizer
 {
-    class Program
+    static class Program
     {
         private const string ALPHA_START = ">>ALPHA>>";
         private const string ALPHA_END = "<<ALPHA<<";

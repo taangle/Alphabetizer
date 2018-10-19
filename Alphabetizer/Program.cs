@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -74,7 +74,17 @@ namespace Alphabetizer
 
         private static List<string> InAlphaNewlineLines(StreamReader reader)
         {
-            throw new NotImplementedException();
+            var lines = new List<string>();
+
+            // TODO: deal with reaching EOF w/out reaching ALPHA_END
+            string line = reader.ReadLine();
+            while (line != ALPHA_END)
+            {
+                lines.Add(line);
+                line = reader.ReadLine();
+            }
+
+            return lines.Count > 0 ? lines : null;
         }
     }
 

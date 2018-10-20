@@ -85,17 +85,17 @@ namespace Alphabetizer
             {
                 foreach (string preLine in preLines)
                 {
-                    writer.Write(preLine);
+                    writer.WriteLine(preLine);
                 }
 
                 foreach (string alphaLine in alphaLines)
                 {
-                    writer.Write(alphaLine);
+                    writer.WriteLine(alphaLine);
                 }
 
                 foreach (string postLine in postLines)
                 {
-                    writer.Write(postLine);
+                    writer.WriteLine(postLine);
                 }
             }
         }
